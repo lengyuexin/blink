@@ -33,3 +33,4 @@
 |delInvalidprops|去除对象或数组的无效属性 
 |downloadByUrl|根据指定url下载文件    
 
+<a href='./blink.js'>获取</a>
