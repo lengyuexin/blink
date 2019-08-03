@@ -1,4 +1,4 @@
- ## blink.js
+## blink.js
 
 > 一个简单的js常用函数库 created by 2019-08-03
 
