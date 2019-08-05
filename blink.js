@@ -469,7 +469,103 @@ function downloadByUrl(url, name = '下载') {
 
 }
 
+/**
+ * enterEvent 回车事件监听
+ * param  function  fn  业务函数
+ */
+
+
+function enterEvent(fn) {
+    document.onkeydown = function (e) {
+        e = e || window.event;
+        if (e.keyCode === 13) {
+            fn();
+        }
+    }
+}
+
+
+
+/**
+ * pastTime 已过时间
+ * param  Date  startTime  起始时间
+ * return string 时间节点描述
+ */
+
+function pastTime(startTime) {
+
+    let currentTime = Date.parse(new Date()),
+        time = currentTime - startTime,
+        day = parseInt(time / (1000 * 60 * 60 * 24)),
+        hour = parseInt(time / (1000 * 60 * 60)),
+        min = parseInt(time / (1000 * 60)),
+        month = parseInt(day / 30),
+        year = parseInt(month / 12);
+    if (year) return year + "年前"
+    if (month) return month + "个月前"
+    if (day) return day + "天前"
+    if (hour) return hour + "小时前"
+    if (min) return min + "分钟前"
+    return '刚刚'
+
+}
+
+
+
+
+
+
 /* 其他常用函数--end*/
+
+
+
+
+
+
+/*正则表达式 start*/
+
+/**
+ * 邮箱校验   isLegalEmail
+ * param  string  email 待校验邮箱
+ * return boolean 校验结果 
+ */
+function isLegalEmail(email) {
+    return /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(email);
+}
+
+
+/**
+ * 中文名校验--(2-6)位    isLegalName
+ * param  string  name 待校验中文名
+ * return boolean 校验结果 
+ */
+function isLegalName(name) {
+    return /^[\u4e00-\u9fa5]{2,6}$/.test(name);
+}
+
+
+
+/**
+ * 身份证校验   isLegalIdCard
+ * param  string  idCard 待校验身份证
+ * return boolean 校验结果 
+ */
+function isLegalIdCard(idCard) {
+    return /^[1-9]{1}[0-9]{14}$|^[1-9]{1}[0-9]{16}([0-9]|[xX])$/.test(idCard);
+}
+
+/**
+ * 手机号码校验   isLegalPhone
+ * param  string  phone 待校验手机号码
+ * return boolean 校验结果 
+ */
+function isLegalPhone(phone) {
+    return /^(((13[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/.test(phone);
+}
+
+
+/*正则表达式 end*/
+
 
 export const Blink= {
     trim,//去除空格
@@ -495,5 +591,11 @@ export const Blink= {
     deepCopy,//深拷贝 
     clearWebSite,//让网页变得干净--调试时使用 
     delInvalidprops,//去除对象或数组的无效属性
-    downloadByUrl,//根据指定url下载文件            
+    downloadByUrl,//根据指定url下载文件 
+    enterEvent,//回车事件监听
+    pastTime,//已过时间
+    isLegalEmail,//邮箱校验
+    isLegalName,//中文名校验--(2-6)位
+    isLegalIdCard,//身份证校验
+    isLegalPhone //手机号码校验                        
 }
