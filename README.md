@@ -33,7 +33,8 @@
 |isLegalEmail|邮箱校验
 |isLegalName|中文名校验--(2-6)位
 |isLegalIdCard|身份证校验
-|isLegalPhone|手机号码校验 
+|isLegalPhone|手机号码校验
+|jsonFormat|自定义缩进的JSON格式化 
 
 
 ## 安装：npm i sparkle-blink
