@@ -28,6 +28,12 @@
 |deepCopy|深拷贝 
 |clearWebSite|让网页变得干净--调试时使用 
 |delInvalidprops|去除对象或数组的无效属性 
-|downloadByUrl|根据指定url下载文件    
+|downloadByUrl|根据指定url下载文件
+|enterEvent|回车事件监听
+|pastTime|已过时间
+|isLegalEmail|邮箱校验
+|isLegalName|中文名校验--(2-6)位
+|isLegalIdCard|身份证校验
+|isLegalPhone|手机号码校验 
 
 <a href='./blink.js'>获取</a>
