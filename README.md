@@ -37,4 +37,12 @@
 
 <a href='./blink.js'>获取</a>
 
-<p>安装：npm i sparkle-blink</p>
+## 安装：npm i sparkle-blink
+
+## 使用
+
+```js
+  import {Blink} from 'sparkle-blink'
+  const {trim}=Blink;
+  console.log(trim('  hello  world  ',1))
+```
