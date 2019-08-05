@@ -36,3 +36,5 @@
 |isLegalPhone|手机号码校验 
 
 <a href='./blink.js'>获取</a>
+
+<p>安装：npm i sparkle-blink</p>
