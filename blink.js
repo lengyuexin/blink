@@ -511,7 +511,16 @@ function pastTime(startTime) {
 }
 
 
-
+/**
+ * jsonFormat  自定义缩进的JSON格式化
+ * param1  Object/Array  obj 待格式化的对象或数组
+ * param2  number  space 缩进数
+ * return string  jsonStr 格式化后的json字符串 
+ */
+function jsonFormat(obj, space) {
+   
+    return JSON.stringify(obj, null, space);
+}
 
 
 
@@ -597,5 +606,6 @@ export const Blink= {
     isLegalEmail,//邮箱校验
     isLegalName,//中文名校验--(2-6)位
     isLegalIdCard,//身份证校验
-    isLegalPhone //手机号码校验                        
+    isLegalPhone, //手机号码校验    
+    jsonFormat,//自定义缩进的JSON格式化  
 }
