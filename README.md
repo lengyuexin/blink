@@ -1,43 +1,55 @@
-## blink.js
+## 使用
 
-> 一个简单的js常用函数库 created by 2019-08-03
-
-函数名|作用|
--|-|
-trim|去除空格
-turnCase|大小写转换-全大写，全小写，首字母大写
-parseCase|大小写相互转换
-checkPwdStrength|验证密码强度
-hexColor|随机16进制颜色
-randomCode|指定位数随机码
-keywordsCount|关键词统计
-caseFormat|短横,下划线与小驼峰的相互转化 
-dateFormat|时间格式化
-reverse|逆序输出
-onlyArray|数组去重
-flat|数组扁平化
-sort|数组排序
-bubble_sort|冒泡排序
-resort|数组错乱排序
-totalArr|数组求和
-mergeArr|数组合并
-lastItem|获取数组最后一项
-preventShake|防抖
-throttle|节流 
-deepCopy|深拷贝 
-clearWebSite|让网页变得干净--调试时使用 
-delInvalidprops|去除对象或数组的无效属性 
-downloadByUrl|根据指定url下载文件
-enterEvent|回车事件监听
-pastTime|已过时间
-isLegalEmail|邮箱校验
-isLegalName|中文名校验--(2-6)位
-isLegalIdCard|身份证校验
-isLegalPhone|手机号码校验
-jsonFormat|自定义缩进的JSON格式化 
+```js
+  import {trim} from 'light-func'
+  console.log(trim('  hello  world  ',1))//helloworld
+```
 
 
-## 安装：npm i sparkle-blink
+
+## API
+
+
+| 函数名           | 作用                                  |
+| ---------------- | ------------------------------------- |
+| trim             | 去除空格                              |
+| turnCase         | 大小写转换-全大写，全小写，首字母大写 |
+| parseCase        | 大小写相互转换                        |
+| checkPwdStrength | 验证密码强度                          |
+| hexColor         | 随机16进制颜色                        |
+| randomCode       | 指定位数随机码                        |
+| keywordsCount    | 关键词统计                            |
+| caseFormat       | 短横,下划线与小驼峰的相互转化         |
+| dateFormat       | 时间格式化                            |
+| reverse          | 逆序输出                              |
+| onlyArray        | 数组去重                              |
+| sort             | 数组排序                              |
+| resort           | 数组错乱排序                          |
+| totalArr         | 数组求和                              |
+| mergeArr         | 数组合并                              |
+| lastItem         | 获取数组最后一项                      |
+| debounce         | 防抖                                  |
+| throttle         | 节流                                  |
+| deepClone        | 深拷贝                                |
+| clearWebSite     | 让网页变得干净--调试时使用            |
+| delInvalidprops  | 去除对象或数组的无效属性              |
+| downloadByUrl    | 根据指定url下载文件                   |
+| enterEvent       | 回车事件监听                          |
+| pastTime         | 已过时间                              |
+| isLegalEmail     | 邮箱校验                              |
+| isLegalName      | 中文名校验--(2-6)位                   |
+| isLegalIdCard    | 身份证校验                            |
+| isLegalPhone     | 手机号码校验                          |
+| jsonFormat       | 自定义缩进的JSON格式化                |
+| setCookie        | 设置cookie                            |
+| getCookie        | 获取cookie                            |
+| clearCookie      | 清除cookie                            |
+| info             | 美化打印--信息                        |
+| warn             | 美化打印--警告                        |
+| error            | 美化打印--错误                        |
+
+
+## 安装：npm i light-func
 
 ## API
 
@@ -182,16 +194,7 @@ jsonFormat|自定义缩进的JSON格式化
 ```
 
 
-<p> <b>flat 数组扁平化</b></p>
 
- 
- * param Array arr 待扁平化的数组
- * return Array arr 扁平化后的数组
- 
-
-```js
-    flat([1,[2,[3,4]]]);//[1,2,3,4]
-```
 
 
 <p> <b>sort 数组排序</b></p>
@@ -208,18 +211,7 @@ jsonFormat|自定义缩进的JSON格式化
 ```
 
 
-<p> <b>bubble_sort 冒泡排序</b></p>
 
- 
- * param1 Array arr 要进行排序的数组
- * param2 number rule 排序规则 1-升序 0-降序,默认升序
- * return Array arr 排序后的数组
- 
-
-```js
-    bubble_sort([1,5,3],1);//[1,3,5]
-    bubble_sort([1,5,3],0);//[5,3,1]
-```
 
 
 <p> <b>resort 数组错乱排序</b></p>
@@ -264,25 +256,29 @@ jsonFormat|自定义缩进的JSON格式化
 ### 其他常用函数
 
 
-<p> <b>preventShake 防抖</b></p>
+<p> <b>debounce 防抖</b></p>
 
-* param function fn 要进行防抖的函数
+* param1 function fn 要进行防抖的函数
+* param2 delay 延迟时间
 
 ```js
     function fn(){};
-    preventShake(fn);
+    var debounceFn=debounce(fn,1000);//返回一个新的防抖函数
+    debounceFn(参数列表)
 ```
 
 <p> <b>throttle 节流</b></p>
 
-* param function fn 要进行节流的函数
+* param1 function fn 要进行节流的函数
+* param2 delay 延迟时间
 
 ```js
     function fn(){};
-    throttle(fn);
+    var throttleFn=throttle(fn,1000);//返回一个新的节流函数
+    throttleFn(参数列表)
 ```
 
-<p> <b>deepCopy 深拷贝</b></p>
+<p> <b>deepClone 深拷贝</b></p>
 
   
  * param Object obj 要进行拷贝的对象
@@ -290,7 +286,7 @@ jsonFormat|自定义缩进的JSON格式化
  
 
 ```js
-   deepCopy({name:'tom',age:18});//{name:'tom',age:18}
+   deepClone({name:'tom',age:18});//{name:'tom',age:18}
 ```
 
 <p> <b>clearWebSite 让网页变得干净</b></p>
@@ -379,6 +375,54 @@ jsonFormat|自定义缩进的JSON格式化
 ```
 
 
+<p> <b>setCookie 设置cookie</b></p>
+
+* param1  String  name  要设置的cookie名称
+* param2   *      value 要设置的cookie值
+ 
+
+```js
+
+    setCookie("name","gaoqian");
+
+```
+<p> <b>getCookie 获取cookie</b></p>
+
+* param    String  name  要获取的cookie名
+* return   String  value 要获取的cookie值
+ 
+
+```js
+
+    getCookie("name");//"gaoqian"
+
+```
+<p> <b>clearCookie 清除cookie</b></p>
+
+* param    String  name  要清除的cookie名
+ 
+
+```js
+
+    clearCookie("name");
+
+```
+
+<p> <b>info,warn,error美化打印</b></p>
+
+ * ...param  String  msg 要输出的信息
+ * return String 美化后的信息
+
+```js
+
+    info("hello");//hello 背景色#2ecc71
+    warn("hello");//hello 背景色orange
+    error("hello");//hello 背景色#FF0000
+
+```
+
+
+
 ### 正则表达式 
 
 <p> <b>isLegalEmail 邮箱校验</b></p>
@@ -432,13 +476,5 @@ jsonFormat|自定义缩进的JSON格式化
 
 
 
-## 使用
-
-```js
-  import {Blink} from 'sparkle-blink'
-  const {trim}=Blink;
-  console.log(trim('  hello  world  ',1))
-```
 
 
-<p><a href='./blink.js'>获取</a></p>
