@@ -228,18 +228,6 @@ function onlyArray(arr) {
     return Array.from(new Set([...arr]))
 }
 
-/**
- * 数组扁平化 flat  
- * param1 Array arr 待扁平化的数组
- * return Array arr 扁平化后的数组
- */
-
-function flat(arr) {
-    if (!Array.isArray(arr)) return;
-    return arr.reduce((initValue, cur) => {
-        return initValue.concat(Array.isArray(cur) ? flat(cur) : cur)
-    }, [])
-}
 
 
 /**
@@ -256,32 +244,7 @@ function sort(arr, rule = 1) {
 
 }
 
-/**
- * 冒泡排序 bubble_sort  
- * param1 Array arr 要进行排序的数组
- * param2 number rule 排序规则 1-升序 0-降序,默认升序
- * return Array arr 排序后的数组
- */
 
-function bubble_sort(arr, rule = 1) {
-    if (!Array.isArray(arr)) return;
-    if (rule && rule !== 1 && rule !== 0) return;
-    for (let i = 0; i < arr.length - 1; i++) {
-        for (let j = 0; j < arr.length - 1 - i; j++) {
-
-            let expression1 = arr[j] > arr[j + 1]
-            let expression2 = arr[j] < arr[j + 1]
-
-            if (rule === 1 ? expression1 : expression2) {
-                let temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
-            }
-
-        }
-    }
-    return arr;
-}
 
 /**
  * 数组错乱排序 resort  
@@ -348,17 +311,17 @@ function lastItem(arr) {
 
 
 /**
- * 防抖 preventShake  
+ * 防抖 debounce  
  * param function fn 要进行防抖的函数
  */
 
-const preventShake = (fn) => {
+const debounce = (fn, delay) => {
     let timer = null; // 创建定时器id
-    return () => {
+    return (...args) => {
         clearTimeout(timer); //事件频繁触发，清除之前定时器 
         timer = setTimeout(() => { // 创建新定时器，保证限定时间间隔fn只执行一次
-            fn();
-        }, 500);
+            fn(...args);
+        }, delay);
     };
 }
 
@@ -367,38 +330,72 @@ const preventShake = (fn) => {
  * param function fn 要进行节流的函数
  */
 
-const throttle = (fn) => {
+const throttle = (fn, delay) => {
     let lock = true; // 函数外设置状态锁，默认开启
-    return () => {
+    return (...args) => {
         if (!lock) return; // 在函数开头判断标记是否为true，不为true则return,阻止后续程序进行
         lock = false; // 改变状态锁
         setTimeout(() => {
-            fn()
+            fn(...args)
             // 函数执行完，回调中改变状态锁
             lock = true;
-        }, 1000);
+        }, delay);
     };
 }
 
 
 /**
- * 深拷贝 deepCopy  
+ * 深拷贝 deepClone  
  * param Object obj 要进行拷贝的对象
  * return Object obj 拷贝后的对象
  */
 
-function deepCopy(obj) {
-    let o = obj instanceof Array ? [] : {};
-    for (let i in obj) {
-        let val = obj[i];
-        if (typeof val === "object") {
-            o[i] = deepCopy(val);
-        } else {
-            o[i] = val;
-        }
+
+function _forEach(array, iteratee) {
+    let index = -1;
+    const length = array.length;
+    while (++index < length) {
+        iteratee(array[index], index);
     }
-    return o;
+    return array;
 }
+
+
+
+function deepClone(target, map = new WeakMap()) {
+
+
+
+    if (typeof target === 'object' && target !== null) {
+        var isArray = Array.isArray(target);
+        var cloneTarget = isArray ? [] : {};
+        if (map.get(target)) {
+            return map.get(target)
+        }
+        map.set(target, cloneTarget)
+
+        if (isArray) {
+            _forEach(target, (value, key) => {
+
+                cloneTarget[key] = deepClone(target[key], map);
+            });
+        } else {
+            const keys = Object.keys(target);
+            _forEach(keys, (value, key) => {
+                key = value;
+                cloneTarget[key] = deepClone(target[key], map);
+            })
+        }
+
+
+
+        return cloneTarget
+    } else {
+        return target
+    }
+}
+
+
 
 
 
@@ -427,7 +424,7 @@ function delInvalidprops(source) {
             source.forEach((item, idx) => {
                 if (item === invalidProp) source.splice(idx, 1);
                 if (typeof item === 'object') delInvalidprops(item);//递归删除--数组>对象
-                
+
             })
 
         })
@@ -510,7 +507,6 @@ function pastTime(startTime) {
 
 }
 
-
 /**
  * jsonFormat  自定义缩进的JSON格式化
  * param1  Object/Array  obj 待格式化的对象或数组
@@ -518,9 +514,84 @@ function pastTime(startTime) {
  * return string  jsonStr 格式化后的json字符串 
  */
 function jsonFormat(obj, space) {
-   
+
     return JSON.stringify(obj, null, space);
 }
+
+/**
+ * setCookie  设置cookie
+ * param1  String  name 要设置的cookie名
+ * param2   *   value 要设置的cookie值
+ */
+
+function setCookie(name, value) {
+    document.cookie = name + "=" + value + ";path=/";
+}
+
+
+/**
+ * getCookie  获取cookie
+ * param1  String  name 要获取的cookie名
+ * return   *  目标cookie的值
+ */
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    if (arr = document.cookie.match(reg)) {
+        return unescape(arr[2]);
+    }
+
+    return null;
+}
+
+
+
+/**
+ * clearCookie  清除cookie
+ * param1  String  name 要清除的cookie名
+ */
+
+
+function clearCookie(name) {
+    setCookie(name, "")
+}
+
+
+
+/**
+ * info,warn,error美化打印
+ * ...param  String  msg 要输出的信息
+ * return String 美化后的信息
+ */
+
+
+
+function _print(type) {
+    return function (...args) {
+        var backgroundColor = _getBackgroundColorByType(type);
+        var css = `background-color:${backgroundColor};color:white;padding:0 10px;border-radius:8px;`
+        if (args.length === 0) return undefined
+        if (args.length === 1) {
+            console.log(`%c${args[0]}`, css);
+        } else {
+            for (var i = 0; i < args.length; i++) {
+                console.log(`%c${args[i]}`, css)
+            }
+        }
+    };
+};
+
+function _getBackgroundColorByType(type = "info") {
+    var map = new Map();
+    map.set("info", "#2ecc71");
+    map.set("warn", "orange");
+    map.set("error", "#FF0000");
+    return map.get(type)
+}
+
+var info = _print("info")
+var warn = _print("warn")
+var error = _print("error")
+
 
 
 
@@ -573,10 +644,13 @@ function isLegalPhone(phone) {
 }
 
 
+
+
+
 /*正则表达式 end*/
 
 
-export const Blink= {
+export {
     trim,//去除空格
     turnCase,//大小写转换-全大写，全小写，首字母大写
     parseCase,//大小写相互转换
@@ -588,16 +662,14 @@ export const Blink= {
     dateFormat,//时间格式化   形如--"20190803 11:01:07"
     reverse, //逆序输出
     onlyArray,//数组去重
-    flat,//数组扁平化  
     sort,//数组排序
-    bubble_sort,//冒泡排序    
     resort,//数组错乱排序  
     totalArr,//数组求和  
     mergeArr,//数组合并 
     lastItem,//获取数组最后一项  
-    preventShake,//防抖   
+    debounce,//防抖   
     throttle,//节流 
-    deepCopy,//深拷贝 
+    deepClone,//深拷贝 
     clearWebSite,//让网页变得干净--调试时使用 
     delInvalidprops,//去除对象或数组的无效属性
     downloadByUrl,//根据指定url下载文件 
@@ -606,6 +678,12 @@ export const Blink= {
     isLegalEmail,//邮箱校验
     isLegalName,//中文名校验--(2-6)位
     isLegalIdCard,//身份证校验
-    isLegalPhone, //手机号码校验    
-    jsonFormat,//自定义缩进的JSON格式化  
+    isLegalPhone,//手机号码校验 
+    jsonFormat,//自定义缩进的JSON格式化 
+    setCookie,//设置cookie 
+    getCookie,//获取cookie 
+    clearCookie,   //清除cookie
+    info,//美化打印--信息
+    warn,//美化打印--警告
+    error//美化打印--错误
 }
